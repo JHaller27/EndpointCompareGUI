@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/ItemMap.cs" type="Script" id=1]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+margin_right = 65.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( -198, -51 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="Items" type="VBoxContainer" parent="."]
+margin_right = 65.0
+size_flags_horizontal = 3
+
+[node name="AddButton" type="Button" parent="."]
+margin_top = 4.0
+margin_right = 49.0
+margin_bottom = 24.0
+size_flags_horizontal = 0
+text = "+ Add"
+
+[connection signal="pressed" from="AddButton" to="." method="_on_AddButton_pressed"]
