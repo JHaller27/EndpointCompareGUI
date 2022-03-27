@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace EndpointCompareGui.proxies
+namespace EndpointCompareGui.factories
 {
-    public class EnumProxy : IProxy
+    public class EnumFactory : IFactory
     {
         public Control Create() => EnumValue.Initialize(this.Items);
         private IEnumerable<string> Items { get; }
 
-        public EnumProxy(IEnumerable<string> items)
+        public EnumFactory(IEnumerable<string> items)
         {
             this.Items = items;
         }

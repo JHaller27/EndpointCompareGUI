@@ -1,4 +1,4 @@
-using EndpointCompareGui.proxies;
+using EndpointCompareGui.factories;
 using Godot;
 
 public class SingleItem : VBoxContainer
@@ -9,12 +9,12 @@ public class SingleItem : VBoxContainer
 		return (SingleItem)_packedScene.Instance();
 	}
 
-	public static SingleItem Initialize(IProxy itemProxy, string label)
+	public static SingleItem Initialize(IFactory itemFactory, string label)
 	{
 		SingleItem instance = Instance();
 
 		instance.GetNode<Label>("Label").Text = label;
-		instance.AddChild(itemProxy.Create());
+		instance.AddChild(itemFactory.Create());
 
 		return instance;
 	}

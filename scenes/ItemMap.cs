@@ -1,4 +1,4 @@
-using EndpointCompareGui.proxies;
+using EndpointCompareGui.factories;
 using Godot;
 
 public class ItemMap : VBoxContainer
@@ -9,20 +9,20 @@ public class ItemMap : VBoxContainer
 		return (ItemMap)_packedScene.Instance();
 	}
 
-	private IProxy KeyProxy { get; set; }
-	private IProxy ValProxy { get; set; }
+	private IFactory KeyFactory { get; set; }
+	private IFactory ValFactory { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 	}
 
-	public static ItemMap Initialize(IProxy keyProxy, IProxy valProxy, string addButtonText)
+	public static ItemMap Initialize(IFactory keyFactory, IFactory valFactory, string addButtonText)
 	{
 		ItemMap instance = Instance();
 
-		instance.KeyProxy = keyProxy;
-		instance.ValProxy = valProxy;
+		instance.KeyFactory = keyFactory;
+		instance.ValFactory = valFactory;
 
 		instance.GetNode<Button>("AddButton").Text = addButtonText;
 
@@ -41,11 +41,11 @@ public class ItemMap : VBoxContainer
 
 		item.AddChild(button);
 
-		Control keyNode = this.KeyProxy.Create();
+		Control keyNode = this.KeyFactory.Create();
 		SetNodeSizing(keyNode, 1);
 		item.AddChild(keyNode);
 
-		Control valNode = this.ValProxy.Create();
+		Control valNode = this.ValFactory.Create();
 		SetNodeSizing(valNode, 3);
 		item.AddChild(valNode);
 

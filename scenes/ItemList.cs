@@ -1,4 +1,4 @@
-using EndpointCompareGui.proxies;
+using EndpointCompareGui.factories;
 using Godot;
 
 public class ItemList : VBoxContainer
@@ -9,18 +9,18 @@ public class ItemList : VBoxContainer
 		return (ItemList)_packedScene.Instance();
 	}
 
-	private IProxy ItemProxy { get; set; }
+	private IFactory ItemFactory { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 	}
 
-	public static ItemList Initialize(IProxy itemProxy, string addButtonText)
+	public static ItemList Initialize(IFactory itemFactory, string addButtonText)
 	{
 		ItemList instance = Instance();
 
-		instance.ItemProxy = itemProxy;
+		instance.ItemFactory = itemFactory;
 		instance.GetNode<Button>("AddButton").Text = addButtonText;
 
 		return instance;
@@ -37,7 +37,7 @@ public class ItemList : VBoxContainer
 		button.Connect("pressed", this, nameof(RemoveItem), new(){item});
 
 		item.AddChild(button);
-		item.AddChild(this.ItemProxy.Create());
+		item.AddChild(this.ItemFactory.Create());
 
 		this.GetNode<VBoxContainer>("Items").AddChild(item);
 	}
