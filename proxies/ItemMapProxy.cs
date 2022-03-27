@@ -4,7 +4,7 @@ namespace EndpointCompareGui.proxies
 {
     public class ItemMapProxy : IProxy
     {
-        public Control Node => ItemMap.Initialize(this.KeyProxy, this.ValProxy, this.AddButtonText);
+        public Control Create() => ItemMap.Initialize(this.KeyProxy, this.ValProxy, this.AddButtonText);
 
         private IProxy KeyProxy { get; }
         private IProxy ValProxy { get; }

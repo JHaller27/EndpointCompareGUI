@@ -41,11 +41,11 @@ public class ItemMap : VBoxContainer
 
 		item.AddChild(button);
 
-		Control keyNode = this.KeyProxy.Node;
+		Control keyNode = this.KeyProxy.Create();
 		SetNodeSizing(keyNode, 1);
 		item.AddChild(keyNode);
 
-		Control valNode = this.ValProxy.Node;
+		Control valNode = this.ValProxy.Create();
 		SetNodeSizing(valNode, 3);
 		item.AddChild(valNode);
 

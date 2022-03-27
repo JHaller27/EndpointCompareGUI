@@ -5,7 +5,7 @@ namespace EndpointCompareGui.proxies
 {
     public class EnumProxy : IProxy
     {
-        public Control Node => EnumValue.Initialize(this.Items);
+        public Control Create() => EnumValue.Initialize(this.Items);
         private IEnumerable<string> Items { get; }
 
         public EnumProxy(IEnumerable<string> items)

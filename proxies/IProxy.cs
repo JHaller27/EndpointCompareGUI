@@ -4,6 +4,6 @@ namespace EndpointCompareGui.proxies
 {
     public interface IProxy
     {
-        Control Node { get; }
+        Control Create();
     }
 }

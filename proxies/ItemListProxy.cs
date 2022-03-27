@@ -4,7 +4,7 @@ namespace EndpointCompareGui.proxies
 {
     public class ItemListProxy : IProxy
     {
-        public Control Node => ItemList.Initialize(this.ItemProxy, this.AddButtonText);
+        public Control Create() => ItemList.Initialize(this.ItemProxy, this.AddButtonText);
 
         private IProxy ItemProxy { get; }
         private string AddButtonText { get; }

@@ -14,7 +14,7 @@ public class SingleItem : VBoxContainer
 		SingleItem instance = Instance();
 
 		instance.GetNode<Label>("Label").Text = label;
-		instance.AddChild(itemProxy.Node);
+		instance.AddChild(itemProxy.Create());
 
 		return instance;
 	}

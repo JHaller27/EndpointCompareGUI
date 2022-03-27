@@ -4,8 +4,8 @@ namespace EndpointCompareGui.proxies
 {
     public class PrimitiveProxy : IProxy
     {
-        public Control Node => this.PrimitiveScene.Instance() as Control;
-        
+        public Control Create() => this.PrimitiveScene.Instance() as Control;
+
         private PackedScene PrimitiveScene { get; }
 
         public PrimitiveProxy(PackedScene scene)

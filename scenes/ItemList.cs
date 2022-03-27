@@ -37,7 +37,7 @@ public class ItemList : VBoxContainer
 		button.Connect("pressed", this, nameof(RemoveItem), new(){item});
 
 		item.AddChild(button);
-		item.AddChild(this.ItemProxy.Node);
+		item.AddChild(this.ItemProxy.Create());
 
 		this.GetNode<VBoxContainer>("Items").AddChild(item);
 	}
