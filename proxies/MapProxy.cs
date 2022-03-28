@@ -5,19 +5,13 @@ using Godot;
 
 namespace EndpointCompareGui.proxies
 {
-	public class MapProxy<TK,TV> : ValueProxy<IDictionary<TK,TV>>
+	public class MapProxy<TK,TV> : ValueProxy<Dictionary<TK,TV>>
 	{
 		private ItemMap Node { get; }
 		private IFactory<TK> KeyFactory { get; }
 		private IFactory<TV> ValFactory { get; }
 
 		private List<KeyValuePair<ValueProxy<TK>, ValueProxy<TV>>> ProxyList { get; } = new();
-
-		private IDictionary<TK, TV> GetValues() => this.ProxyList.ToDictionary(
-			kvp => kvp.Key.GetValue(),
-			kvp => kvp.Value.GetValue()
-		);
-
 
 		public MapProxy(ItemMap control, IFactory<TK> keyFactory, IFactory<TV> valFactory) : base(control)
 		{
@@ -28,7 +22,10 @@ namespace EndpointCompareGui.proxies
 			this.Node.AddItemFunc = this.OnAddItem;
 		}
 
-		public override IDictionary<TK, TV> GetValue() => this.GetValues();
+		public override Dictionary<TK, TV> GetValue() => this.ProxyList.ToDictionary(
+			kvp => kvp.Key.GetValue(),
+			kvp => kvp.Value.GetValue()
+		);
 
 		private void OnAddItem()
 		{

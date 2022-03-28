@@ -5,7 +5,7 @@ using Godot;
 
 namespace EndpointCompareGui.proxies
 {
-	public class ListProxy<T> : ValueProxy<IEnumerable<T>>
+	public class ListProxy<T> : ValueProxy<List<T>>
 	{
 		private ItemList Node { get; }
 		public ListProxy(ItemList control, IFactory<T> itemFactory) : base(control)
@@ -16,12 +16,10 @@ namespace EndpointCompareGui.proxies
 			this.ItemFactory = itemFactory;
 		}
 
-		public override IEnumerable<T> GetValue() => this.GetChildValues();
+		public override List<T> GetValue() => this.ChildProxies.Select(p => p.GetValue()).ToList();
 
 		private IFactory<T> ItemFactory { get; }
 		private List<ValueProxy<T>> ChildProxies { get; } = new();
-
-		private IEnumerable<T> GetChildValues() => this.ChildProxies.Select(p => p.GetValue());
 
 		private void AddChild()
 		{

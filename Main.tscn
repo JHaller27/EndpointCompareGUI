@@ -73,3 +73,6 @@ margin_right = 986.0
 margin_bottom = 522.0
 size_flags_horizontal = 3
 script = ExtResource( 5 )
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ImportButton" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_ImportButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ExportButton" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_ExportButton_pressed"]
