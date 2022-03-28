@@ -5,26 +5,26 @@ using Godot;
 
 namespace EndpointCompareGui.proxies
 {
-    public class ListProxy<T> : ValueProxy<IEnumerable<T>>
-    {
-        private ItemList Node { get; }
-        public ListProxy(ItemList control, IFactory<T> itemFactory) : base(control)
-        {
-            this.Node = control;
-            this.Node.OnAddItem = this.AddChild;
+	public class ListProxy<T> : ValueProxy<IEnumerable<T>>
+	{
+		private ItemList Node { get; }
+		public ListProxy(ItemList control, IFactory<T> itemFactory) : base(control)
+		{
+			this.Node = control;
+			this.Node.OnAddItem = this.AddChild;
 
-            this.ItemFactory = itemFactory;
-        }
+			this.ItemFactory = itemFactory;
+		}
 
-        public override IEnumerable<T> GetValue() => this.GetChildValues();
+		public override IEnumerable<T> GetValue() => this.GetChildValues();
 
-        private IFactory<T> ItemFactory { get; }
+		private IFactory<T> ItemFactory { get; }
 		private List<ValueProxy<T>> ChildProxies { get; } = new();
 
 		private IEnumerable<T> GetChildValues() => this.ChildProxies.Select(p => p.GetValue());
 
-        private void AddChild()
-        {
+		private void AddChild()
+		{
 			HBoxContainer item = new();
 
 			Button button = new()
@@ -40,6 +40,6 @@ namespace EndpointCompareGui.proxies
 			this.Node.GetNode<VBoxContainer>("Items").AddChild(item);
 
 			this.ChildProxies.Add(childProxy);
-        }
-    }
+		}
+	}
 }

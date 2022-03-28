@@ -5,33 +5,33 @@ using Godot;
 
 namespace EndpointCompareGui.proxies
 {
-    public class MapProxy<TK,TV> : ValueProxy<IDictionary<TK,TV>>
-    {
-        private ItemMap Node { get; }
-        private IFactory<TK> KeyFactory { get; }
-        private IFactory<TV> ValFactory { get; }
+	public class MapProxy<TK,TV> : ValueProxy<IDictionary<TK,TV>>
+	{
+		private ItemMap Node { get; }
+		private IFactory<TK> KeyFactory { get; }
+		private IFactory<TV> ValFactory { get; }
 
-        private List<KeyValuePair<ValueProxy<TK>, ValueProxy<TV>>> ProxyList { get; } = new();
+		private List<KeyValuePair<ValueProxy<TK>, ValueProxy<TV>>> ProxyList { get; } = new();
 
-        public IDictionary<TK, TV> GetValues() => this.ProxyList.ToDictionary(
-            kvp => kvp.Key.GetValue(),
-            kvp => kvp.Value.GetValue()
-        );
+		public IDictionary<TK, TV> GetValues() => this.ProxyList.ToDictionary(
+			kvp => kvp.Key.GetValue(),
+			kvp => kvp.Value.GetValue()
+		);
 
 
-        public MapProxy(ItemMap control, IFactory<TK> keyFactory, IFactory<TV> valFactory) : base(control)
-        {
-            this.Node = control;
-            this.KeyFactory = keyFactory;
-            this.ValFactory = valFactory;
+		public MapProxy(ItemMap control, IFactory<TK> keyFactory, IFactory<TV> valFactory) : base(control)
+		{
+			this.Node = control;
+			this.KeyFactory = keyFactory;
+			this.ValFactory = valFactory;
 
-            this.Node.AddItemFunc = this.OnAddItem;
-        }
+			this.Node.AddItemFunc = this.OnAddItem;
+		}
 
-        public override IDictionary<TK, TV> GetValue() => this.GetValues();
+		public override IDictionary<TK, TV> GetValue() => this.GetValues();
 
-        private void OnAddItem()
-        {
+		private void OnAddItem()
+		{
 			HBoxContainer item = new();
 
 			Button button = new()
@@ -53,12 +53,12 @@ namespace EndpointCompareGui.proxies
 			this.Node.GetNode<VBoxContainer>("Items").AddChild(item);
 
 			this.ProxyList.Add(new(keyNode, valNode));
-        }
+		}
 
 		private static void SetNodeSizing(Control node, int stretchRatio)
 		{
 			node.SizeFlagsStretchRatio = stretchRatio;
 			node.SizeFlagsHorizontal = (int) Control.SizeFlags.ExpandFill;
 		}
-    }
+	}
 }
