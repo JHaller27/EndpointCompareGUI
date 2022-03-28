@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using EndpointCompareGui.factories;
 using EndpointCompareGui.factories.primitives;
 using EndpointCompareGui.proxies;
 using Godot;
+using Newtonsoft.Json;
+using File = System.IO.File;
 
 public class MainInputs : VBoxContainer
 {
@@ -75,16 +76,18 @@ public class MainInputs : VBoxContainer
 		}
 	}
 
-	private void _on_ExportButton_pressed()
+	private void _on_FileDialog_file_selected(String path)
 	{
+		Console.WriteLine($"Path: {path}");
+
 		EndpointCompareConfig config = new();
 		foreach (Action<EndpointCompareConfig> exportAction in this.ExportActions)
 		{
 			exportAction(config);
 		}
 
-		// TODO: Actually export to file
-		Console.WriteLine(config);
+		string jsonString = JsonConvert.SerializeObject(config);
+		File.WriteAllText(path, jsonString);
 	}
 
 	private class EndpointCompareConfig

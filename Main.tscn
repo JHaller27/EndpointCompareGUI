@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://MainTheme.tres" type="Theme" id=1]
+[ext_resource path="res://FileDialogScript.cs" type="Script" id=2]
 [ext_resource path="res://MainInputs.cs" type="Script" id=5]
 
 [node name="Control" type="Control"]
@@ -74,5 +75,23 @@ margin_bottom = 522.0
 size_flags_horizontal = 3
 script = ExtResource( 5 )
 
+[node name="FileDialog" type="FileDialog" parent="."]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -208.0
+margin_top = -208.0
+margin_right = 208.0
+margin_bottom = 208.0
+rect_min_size = Vector2( 400, 140 )
+access = 2
+filters = PoolStringArray( "*.json" )
+current_dir = "/Users/james.ERDOS/Documents/godot/EndpointCompareGUI"
+current_path = "/Users/james.ERDOS/Documents/godot/EndpointCompareGUI/"
+script = ExtResource( 2 )
+
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ImportButton" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_ImportButton_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ExportButton" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_ExportButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ExportButton" to="FileDialog" method="_on_ExportButton_pressed"]
+[connection signal="file_selected" from="FileDialog" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_FileDialog_file_selected"]

@@ -4,4 +4,7 @@
     <RootNamespace>EndpointCompareGui</RootNamespace>
     <LangVersion>9</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
 </Project>
