@@ -13,7 +13,7 @@ namespace EndpointCompareGui.proxies
 
 		private List<KeyValuePair<ValueProxy<TK>, ValueProxy<TV>>> ProxyList { get; } = new();
 
-		public IDictionary<TK, TV> GetValues() => this.ProxyList.ToDictionary(
+		private IDictionary<TK, TV> GetValues() => this.ProxyList.ToDictionary(
 			kvp => kvp.Key.GetValue(),
 			kvp => kvp.Value.GetValue()
 		);
