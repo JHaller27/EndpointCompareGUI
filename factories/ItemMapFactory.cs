@@ -5,7 +5,7 @@ namespace EndpointCompareGui.factories
 {
     public class ItemMapFactory<TK,TV> : IFactory<IDictionary<TK,TV>>
     {
-        public ValueProxy<IDictionary<TK,TV>> Create() => new MapProxy<TK, TV>(ItemMap<TK,TV>.Initialize(this.KeyFactory, this.ValFactory, this.AddButtonText));
+        public ValueProxy<IDictionary<TK,TV>> Create() => new MapProxy<TK, TV>(ItemMap.Initialize(this.AddButtonText), this.KeyFactory, this.ValFactory);
 
         private IFactory<TK> KeyFactory { get; }
         private IFactory<TV> ValFactory { get; }

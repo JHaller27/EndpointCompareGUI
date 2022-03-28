@@ -5,7 +5,7 @@ namespace EndpointCompareGui.factories
 {
     public class ItemListFactory<T> : IFactory<IEnumerable<T>>
     {
-        public ValueProxy<IEnumerable<T>> Create() => new ListProxy<T>(ItemList<T>.Initialize(this.ItemFactory, this.AddButtonText));
+        public ValueProxy<IEnumerable<T>> Create() => new ListProxy<T>(ItemList.Initialize(this.AddButtonText), this.ItemFactory);
 
         private IFactory<T> ItemFactory { get; }
         private string AddButtonText { get; }

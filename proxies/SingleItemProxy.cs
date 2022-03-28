@@ -1,14 +1,21 @@
+using EndpointCompareGui.factories;
+
 namespace EndpointCompareGui.proxies
 {
     public class SingleItemProxy<T> : ValueProxy<T>
     {
-        private SingleItem<T> Node { get; }
+        private SingleItem Node { get; }
 
-        public SingleItemProxy(SingleItem<T> control) : base(control)
+        private ValueProxy<T> ItemProxy { get; }
+
+        public SingleItemProxy(SingleItem control, IFactory<T> itemFactory) : base(control)
         {
             this.Node = control;
+            this.ItemProxy = itemFactory.Create();
+
+            this.Node.AddItem(this.ItemProxy.Control);
         }
 
-        public override T GetValue() => this.Node.GetValue();
+        public override T GetValue() => this.ItemProxy.GetValue();
     }
 }
