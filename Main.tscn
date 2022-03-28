@@ -60,13 +60,13 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer"]
 margin_right = 994.0
 margin_bottom = 530.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MainInputs" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer2"]
+[node name="MainInputs" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 986.0
