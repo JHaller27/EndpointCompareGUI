@@ -38,4 +38,14 @@ public class MainInputs : VBoxContainer
 
 		return itemProxy;
 	}
+
+	private class EndpointCompareConfig
+	{
+		public string Source { get; set; }
+		public string Target { get; set; }
+		public IDictionary<string, string> Headers { get; set; }
+		public IDictionary<string, IEnumerable<string>> VaryList { get; set; }
+		public bool CartesianProduct { get; set; }
+		public bool AllowCaseSensitive { get; set; }
+	}
 }
