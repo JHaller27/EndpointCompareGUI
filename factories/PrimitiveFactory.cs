@@ -1,10 +1,11 @@
+using EndpointCompareGui.proxies;
 using Godot;
 
 namespace EndpointCompareGui.factories
 {
     public class PrimitiveFactory : IFactory
     {
-        public Control Create() => this.PrimitiveScene.Instance() as Control;
+        public ValueProxy Create() => new(this.PrimitiveScene.Instance() as Control);
 
         private PackedScene PrimitiveScene { get; }
 

@@ -1,9 +1,9 @@
-using Godot;
+using EndpointCompareGui.proxies;
 
 namespace EndpointCompareGui.factories
 {
     public interface IFactory
     {
-        Control Create();
+        ValueProxy Create();
     }
 }

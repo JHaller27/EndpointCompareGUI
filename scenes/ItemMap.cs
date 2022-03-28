@@ -1,4 +1,5 @@
 using EndpointCompareGui.factories;
+using EndpointCompareGui.proxies;
 using Godot;
 
 public class ItemMap : VBoxContainer
@@ -41,13 +42,13 @@ public class ItemMap : VBoxContainer
 
 		item.AddChild(button);
 
-		Control keyNode = this.KeyFactory.Create();
-		SetNodeSizing(keyNode, 1);
-		item.AddChild(keyNode);
+		ValueProxy keyNode = this.KeyFactory.Create();
+		SetNodeSizing(keyNode.Control, 1);
+		item.AddChild(keyNode.Control);
 
-		Control valNode = this.ValFactory.Create();
-		SetNodeSizing(valNode, 3);
-		item.AddChild(valNode);
+		ValueProxy valNode = this.ValFactory.Create();
+		SetNodeSizing(valNode.Control, 3);
+		item.AddChild(valNode.Control);
 
 		this.GetNode<VBoxContainer>("Items").AddChild(item);
 	}

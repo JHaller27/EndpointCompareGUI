@@ -1,10 +1,10 @@
-using Godot;
+using EndpointCompareGui.proxies;
 
 namespace EndpointCompareGui.factories
 {
     public class ItemMapFactory : IFactory
     {
-        public Control Create() => ItemMap.Initialize(this.KeyFactory, this.ValFactory, this.AddButtonText);
+        public ValueProxy Create() => new(ItemMap.Initialize(this.KeyFactory, this.ValFactory, this.AddButtonText));
 
         private IFactory KeyFactory { get; }
         private IFactory ValFactory { get; }
