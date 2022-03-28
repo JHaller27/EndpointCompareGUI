@@ -1,4 +1,5 @@
 using EndpointCompareGui.factories;
+using EndpointCompareGui.proxies;
 using Godot;
 
 public class MainInputs : VBoxContainer
@@ -28,8 +29,11 @@ public class MainInputs : VBoxContainer
 		this.AddItem(_boolFactory, "Allow Case-sensitive");
 	}
 
-	private void AddItem(IFactory factory, string label)
+	private ValueProxy AddItem(IFactory factory, string label)
 	{
-		this.AddChild(SingleItem.Initialize(factory, label));
+		ValueProxy itemProxy = new SingleItemFactory(factory, label).Create();
+		this.AddChild(itemProxy.Control);
+
+		return itemProxy;
 	}
 }
