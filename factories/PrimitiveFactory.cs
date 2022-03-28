@@ -3,18 +3,18 @@ using Godot;
 
 namespace EndpointCompareGui.factories
 {
-    public class PrimitiveFactory : IFactory
+    public abstract class PrimitiveFactory<T> : IFactory<T>
     {
-        public ValueProxy Create() => new(this.PrimitiveScene.Instance() as Control);
+        public abstract ValueProxy<T> Create();
 
-        private PackedScene PrimitiveScene { get; }
+        protected PackedScene PrimitiveScene { get; }
 
-        public PrimitiveFactory(PackedScene scene)
+        private PrimitiveFactory(PackedScene scene)
         {
             this.PrimitiveScene = scene;
         }
 
-        public PrimitiveFactory(string name) : this((PackedScene)ResourceLoader.Load($"res://scenes/primitives/{name}Value.tscn"))
+        protected PrimitiveFactory(string name) : this((PackedScene)ResourceLoader.Load($"res://scenes/primitives/{name}Value.tscn"))
         {
         }
     }

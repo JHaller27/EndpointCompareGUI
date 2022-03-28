@@ -3,9 +3,9 @@ using EndpointCompareGui.proxies;
 
 namespace EndpointCompareGui.factories
 {
-    public class EnumFactory : IFactory
+    public class EnumFactory : IFactory<string>
     {
-        public ValueProxy Create() => new(EnumValue.Initialize(this.Items));
+        public ValueProxy<string> Create() => new EnumProxy(EnumValue.Initialize(this.Items));
         private IEnumerable<string> Items { get; }
 
         public EnumFactory(IEnumerable<string> items)

@@ -1,26 +1,30 @@
+using System.Collections.Generic;
+using System.Linq;
 using EndpointCompareGui.factories;
 using EndpointCompareGui.proxies;
 using Godot;
 
-public class ItemMap : VBoxContainer
+public class ItemMap<TK,TV> : VBoxContainer
 {
 	private static readonly PackedScene _packedScene = (PackedScene) ResourceLoader.Load("res://scenes/ItemMap.tscn");
-	private static ItemMap Instance()
+	private static ItemMap<TK,TV> Instance()
 	{
-		return (ItemMap)_packedScene.Instance();
+		return (ItemMap<TK,TV>)_packedScene.Instance();
 	}
 
-	private IFactory KeyFactory { get; set; }
-	private IFactory ValFactory { get; set; }
+	private IFactory<TK> KeyFactory { get; set; }
+	private IFactory<TV> ValFactory { get; set; }
+
+	private List<KeyValuePair<ValueProxy<TK>, ValueProxy<TV>>> ProxyList { get; } = new();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 	}
 
-	public static ItemMap Initialize(IFactory keyFactory, IFactory valFactory, string addButtonText)
+	public static ItemMap<TK,TV> Initialize(IFactory<TK> keyFactory, IFactory<TV> valFactory, string addButtonText)
 	{
-		ItemMap instance = Instance();
+		ItemMap<TK,TV> instance = Instance();
 
 		instance.KeyFactory = keyFactory;
 		instance.ValFactory = valFactory;
@@ -29,6 +33,11 @@ public class ItemMap : VBoxContainer
 
 		return instance;
 	}
+
+	public IDictionary<TK, TV> GetValues() => this.ProxyList.ToDictionary(
+		kvp => kvp.Key.GetValue(),
+		kvp => kvp.Value.GetValue()
+	);
 
 	private void _on_AddButton_pressed()
 	{
@@ -42,15 +51,17 @@ public class ItemMap : VBoxContainer
 
 		item.AddChild(button);
 
-		ValueProxy keyNode = this.KeyFactory.Create();
+		ValueProxy<TK> keyNode = this.KeyFactory.Create();
 		SetNodeSizing(keyNode.Control, 1);
 		item.AddChild(keyNode.Control);
 
-		ValueProxy valNode = this.ValFactory.Create();
+		ValueProxy<TV> valNode = this.ValFactory.Create();
 		SetNodeSizing(valNode.Control, 3);
 		item.AddChild(valNode.Control);
 
 		this.GetNode<VBoxContainer>("Items").AddChild(item);
+
+		this.ProxyList.Add(new(keyNode, valNode));
 	}
 
 	private static void SetNodeSizing(Control node, int stretchRatio)

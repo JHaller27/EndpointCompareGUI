@@ -1,21 +1,28 @@
 using EndpointCompareGui.factories;
+using EndpointCompareGui.proxies;
 using Godot;
 
-public class SingleItem : VBoxContainer
+public class SingleItem<T> : VBoxContainer
 {
 	private static readonly PackedScene _packedScene = (PackedScene) ResourceLoader.Load("res://scenes/SingleItem.tscn");
-	private static SingleItem Instance()
+	private static SingleItem<T> Instance()
 	{
-		return (SingleItem)_packedScene.Instance();
+		return _packedScene.Instance<SingleItem<T>>();
 	}
 
-	public static SingleItem Initialize(IFactory itemFactory, string label)
+	private ValueProxy<T> Proxy { get; set; }
+
+	public static SingleItem<T> Initialize(IFactory<T> itemFactory, string label)
 	{
-		SingleItem instance = Instance();
+		SingleItem<T> instance = Instance();
+
+		instance.Proxy = itemFactory.Create();
 
 		instance.GetNode<Label>("Label").Text = label;
-		instance.AddChild(itemFactory.Create().Control);
+		instance.AddChild(instance.Proxy.Control);
 
 		return instance;
 	}
+
+	public T GetValue() => this.Proxy.GetValue();
 }

@@ -2,8 +2,8 @@ using EndpointCompareGui.proxies;
 
 namespace EndpointCompareGui.factories
 {
-    public interface IFactory
+    public interface IFactory<T>
     {
-        ValueProxy Create();
+        ValueProxy<T> Create();
     }
 }

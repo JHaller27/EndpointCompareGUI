@@ -2,14 +2,14 @@ using EndpointCompareGui.proxies;
 
 namespace EndpointCompareGui.factories
 {
-    public class SingleItemFactory : IFactory
+    public class SingleItemFactory<T> : IFactory<T>
     {
-        public ValueProxy Create() => new(SingleItem.Initialize(this.ItemFactory, this.LabelText));
+        public ValueProxy<T> Create() => new SingleItemProxy<T>(SingleItem<T>.Initialize(this.ItemFactory, this.LabelText));
 
-        private IFactory ItemFactory { get; }
+        private IFactory<T> ItemFactory { get; }
         private string LabelText { get; }
 
-        public SingleItemFactory(IFactory itemFactory, string labelText = "+ Add Item")
+        public SingleItemFactory(IFactory<T> itemFactory, string labelText = "+ Add Item")
         {
             this.ItemFactory = itemFactory;
             this.LabelText = labelText;

@@ -1,16 +1,17 @@
+using System.Collections.Generic;
 using EndpointCompareGui.proxies;
 
 namespace EndpointCompareGui.factories
 {
-    public class ItemMapFactory : IFactory
+    public class ItemMapFactory<TK,TV> : IFactory<IDictionary<TK,TV>>
     {
-        public ValueProxy Create() => new(ItemMap.Initialize(this.KeyFactory, this.ValFactory, this.AddButtonText));
+        public ValueProxy<IDictionary<TK,TV>> Create() => new MapProxy<TK, TV>(ItemMap<TK,TV>.Initialize(this.KeyFactory, this.ValFactory, this.AddButtonText));
 
-        private IFactory KeyFactory { get; }
-        private IFactory ValFactory { get; }
+        private IFactory<TK> KeyFactory { get; }
+        private IFactory<TV> ValFactory { get; }
         private string AddButtonText { get; }
 
-        public ItemMapFactory(IFactory keyFactory, IFactory valFactory, string addButtonText = "+ Add Item")
+        public ItemMapFactory(IFactory<TK> keyFactory, IFactory<TV> valFactory, string addButtonText = "+ Add Item")
         {
             this.KeyFactory = keyFactory;
             this.ValFactory = valFactory;

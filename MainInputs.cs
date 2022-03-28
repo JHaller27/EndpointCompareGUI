@@ -1,11 +1,13 @@
+using System.Collections.Generic;
 using EndpointCompareGui.factories;
+using EndpointCompareGui.factories.primitives;
 using EndpointCompareGui.proxies;
 using Godot;
 
 public class MainInputs : VBoxContainer
 {
-	private readonly IFactory _stringFactory = new PrimitiveFactory("String");
-	private readonly IFactory _boolFactory = new PrimitiveFactory("Bool");
+	private readonly StringFactory _stringFactory = new();
+	private readonly BoolFactory _boolFactory = new();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -17,11 +19,11 @@ public class MainInputs : VBoxContainer
 		this.AddChild(new HSeparator());
 
 		// Add Headers section
-		this.AddItem(new ItemMapFactory(_stringFactory, _stringFactory), "Headers");
+		this.AddItem(new ItemMapFactory<string, string>(_stringFactory, _stringFactory), "Headers");
 
 		// Add VaryList
 		this.AddItem(_boolFactory, "Cartesian Product");
-		this.AddItem(new ItemMapFactory(_stringFactory, new ItemListFactory(_stringFactory)), "VaryList");
+		this.AddItem(new ItemMapFactory<string, IEnumerable<string>>(_stringFactory, new ItemListFactory<string>(_stringFactory)), "VaryList");
 
 		this.AddChild(new HSeparator());
 
@@ -29,9 +31,9 @@ public class MainInputs : VBoxContainer
 		this.AddItem(_boolFactory, "Allow Case-sensitive");
 	}
 
-	private ValueProxy AddItem(IFactory factory, string label)
+	private ValueProxy<T> AddItem<T>(IFactory<T> factory, string label)
 	{
-		ValueProxy itemProxy = new SingleItemFactory(factory, label).Create();
+		ValueProxy<T> itemProxy = new SingleItemFactory<T>(factory, label).Create();
 		this.AddChild(itemProxy.Control);
 
 		return itemProxy;

@@ -2,7 +2,7 @@ using Godot;
 
 namespace EndpointCompareGui.proxies
 {
-    public class ValueProxy
+    public abstract class ValueProxy<T>
     {
         public Control Control { get; }
 
@@ -10,5 +10,7 @@ namespace EndpointCompareGui.proxies
         {
             this.Control = control;
         }
+
+        public abstract T GetValue();
     }
 }
