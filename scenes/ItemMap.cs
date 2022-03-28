@@ -25,4 +25,9 @@ public class ItemMap : VBoxContainer
 	}
 
 	private void _on_AddButton_pressed() => this.AddItemFunc();
+
+	public void RemoveItem(Node item)
+	{
+		this.GetNode<VBoxContainer>("Items").RemoveChild(item);
+	}
 }

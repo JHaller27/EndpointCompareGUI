@@ -41,6 +41,5 @@ namespace EndpointCompareGui.proxies
 
 			this.ChildProxies.Add(childProxy);
         }
-
     }
 }

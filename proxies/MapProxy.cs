@@ -38,7 +38,7 @@ namespace EndpointCompareGui.proxies
 			{
 				Text = "-",
 			};
-			button.Connect("pressed", this.Node, nameof(RemoveItem), new(){item});
+			button.Connect("pressed", this.Node, nameof(ItemMap.RemoveItem), new(){item});
 
 			item.AddChild(button);
 
@@ -59,11 +59,6 @@ namespace EndpointCompareGui.proxies
 		{
 			node.SizeFlagsStretchRatio = stretchRatio;
 			node.SizeFlagsHorizontal = (int) Control.SizeFlags.ExpandFill;
-		}
-
-		private void RemoveItem(Node item)
-		{
-			this.Node.GetNode<VBoxContainer>("Items").RemoveChild(item);
 		}
     }
 }
