@@ -12,5 +12,6 @@ namespace EndpointCompareGui.proxies
 		}
 
 		public abstract T GetValue();
+		public abstract void SetValue(T value);
 	}
 }

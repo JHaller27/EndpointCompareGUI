@@ -14,72 +14,89 @@ public class MainInputs : VBoxContainer
 
 	private List<Action<EndpointCompareConfig>> ExportActions = new();
 	private List<Action<EndpointCompareConfig>> ImportActions = new();
+	
+	private bool ExportMode { get; set; }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		// Add Source + Target
 		this.AddItem(_stringFactory, "Source",
-			(val, config) => config.Source = val
+			(val, config) => config.Source = val,
+			config => config.Source
 		);
 		this.AddItem(_stringFactory, "Target",
-			(val, config) => config.Target = val
+			(val, config) => config.Target = val,
+			config => config.Target
 		);
 
 		this.AddChild(new HSeparator());
 
 		// Add Headers section
 		this.AddItem(new ItemMapFactory<string, string>(_stringFactory, _stringFactory), "Headers",
-			(val, config) => config.Headers = val
+			(val, config) => config.Headers = val,
+			config => config.Headers
 		);
 
 		// Add VaryList
 		this.AddItem(_boolFactory, "Cartesian Product",
-			(val, config) => config.CartesianProduct = val
+			(val, config) => config.CartesianProduct = val,
+			config => config.CartesianProduct
 		);
 		this.AddItem(new ItemMapFactory<string, List<string>>(_stringFactory, new ItemListFactory<string>(_stringFactory)), "VaryList",
-			(val, config) => config.VaryList = val
+			(val, config) => config.VaryList = val,
+			config => config.VaryList
 		);
 
 		this.AddChild(new HSeparator());
 
 		// Add misc config
 		this.AddItem(_boolFactory, "Allow Case-sensitive",
-			(val, config) => config.AllowCaseSensitive = val
+			(val, config) => config.AllowCaseSensitive = val,
+			config => config.AllowCaseSensitive
 		);
+
+		// Connect to FileDialog custom signals
+		this.Connect("SetExport", this, nameof(SetExport));
+		this.Connect("SetImport", this, nameof(SetImport));
 	}
 
 	private void AddItem<T>(IFactory<T> factory, string label,
-		Action<T, EndpointCompareConfig> exportFunc
+		Action<T, EndpointCompareConfig> exportFunc,
+		Func<EndpointCompareConfig, T> importFunc
 	)
 	{
 		ValueProxy<T> itemProxy = new SingleItemFactory<T>(factory, label).Create();
 		this.AddChild(itemProxy.Control);
 
 		this.ExportActions.Add(config => exportFunc(itemProxy.GetValue(), config));
+		this.ImportActions.Add(config => itemProxy.SetValue(importFunc(config)));
 	}
 
-	private void _on_ImportButton_pressed()
+	private void _on_FileDialog_file_selected(string path)
 	{
-		// TODO: Actually import from file
-		EndpointCompareConfig config = new()
+		if (this.ExportMode)
 		{
-			Source = "TestSource",
-			Target = "TestTarget",
-			Headers = new() { ["x-TestHeader"] = "TestValue" },
-			VaryList = new() { ["TestKey"] = new(){ "TestVal1", "TestVal2" }},
-		};
-
-		foreach (Action<EndpointCompareConfig> importAction in this.ImportActions)
+			this.Export(path);
+		}
+		else
 		{
-			importAction(config);
+			this.Import(path);
 		}
 	}
 
-	private void _on_FileDialog_file_selected(String path)
+	private void SetExport()
 	{
-		Console.WriteLine($"Path: {path}");
+		this.ExportMode = true;
+	}
 
+	private void SetImport()
+	{
+		this.ExportMode = false;
+	}
+
+	private void Export(string path)
+	{
 		EndpointCompareConfig config = new();
 		foreach (Action<EndpointCompareConfig> exportAction in this.ExportActions)
 		{
@@ -88,6 +105,17 @@ public class MainInputs : VBoxContainer
 
 		string jsonString = JsonConvert.SerializeObject(config);
 		File.WriteAllText(path, jsonString);
+	}
+
+	private void Import(string path)
+	{
+		string jsonString = File.ReadAllText(path);
+		EndpointCompareConfig config = JsonConvert.DeserializeObject<EndpointCompareConfig>(jsonString);
+
+		foreach (Action<EndpointCompareConfig> importAction in this.ImportActions)
+		{
+			importAction(config);
+		}
 	}
 
 	private class EndpointCompareConfig

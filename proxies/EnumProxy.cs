@@ -13,5 +13,16 @@ namespace EndpointCompareGui.proxies
 		{
 			return this.Node.GetItemText(this.Node.Selected);
 		}
+
+		public override void SetValue(string value)
+		{
+			for (int i = 0; i < this.Node.GetItemCount(); i++)
+			{
+				if (this.Node.GetItemText(i) != value) continue;
+
+				this.Node.Selected = i;
+				return;
+			}
+		}
 	}
 }
