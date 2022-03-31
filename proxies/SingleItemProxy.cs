@@ -17,5 +17,9 @@ namespace EndpointCompareGui.proxies
 		}
 
 		public override T GetValue() => this.ItemProxy.GetValue();
+		public override void SetValue(T value)
+		{
+			this.ItemProxy.SetValue(value);
+		}
 	}
 }

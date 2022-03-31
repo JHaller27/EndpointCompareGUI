@@ -16,5 +16,10 @@ namespace EndpointCompareGui.proxies
         {
             return this.Node.Pressed;
         }
+
+        public override void SetValue(bool value)
+        {
+            this.Node.Pressed = value;
+        }
     }
 }

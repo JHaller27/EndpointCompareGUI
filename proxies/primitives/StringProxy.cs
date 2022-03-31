@@ -15,5 +15,10 @@ namespace EndpointCompareGui.proxies
         {
             return this.Node.Text;
         }
+
+        public override void SetValue(string value)
+        {
+            this.Node.Text = value;
+        }
     }
 }

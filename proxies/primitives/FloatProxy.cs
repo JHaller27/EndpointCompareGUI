@@ -16,5 +16,10 @@ namespace EndpointCompareGui.proxies
         {
             return (float)this.Node.Value;
         }
+
+        public override void SetValue(float value)
+        {
+            this.Node.Value = value;
+        }
     }
 }

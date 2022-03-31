@@ -27,6 +27,17 @@ namespace EndpointCompareGui.proxies
 			kvp => kvp.Value.GetValue()
 		);
 
+		public override void SetValue(Dictionary<TK, TV> value)
+		{
+			foreach (KeyValuePair<TK,TV> kvp in value)
+			{
+				this.OnAddItem();
+				KeyValuePair<ValueProxy<TK>, ValueProxy<TV>> last = this.ProxyList.Last();
+				last.Key.SetValue(kvp.Key);
+				last.Value.SetValue(kvp.Value);
+			}
+		}
+
 		private void OnAddItem()
 		{
 			HBoxContainer item = new();

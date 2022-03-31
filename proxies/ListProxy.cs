@@ -17,6 +17,14 @@ namespace EndpointCompareGui.proxies
 		}
 
 		public override List<T> GetValue() => this.ChildProxies.Select(p => p.GetValue()).ToList();
+		public override void SetValue(List<T> value)
+		{
+			foreach (T item in value)
+			{
+				this.AddChild();
+				this.ChildProxies.Last().SetValue(item);
+			}
+		}
 
 		private IFactory<T> ItemFactory { get; }
 		private List<ValueProxy<T>> ChildProxies { get; } = new();
