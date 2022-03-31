@@ -15,15 +15,15 @@ public class FileDialogScript : FileDialog
 
 	private void _on_ExportButton_pressed()
 	{
-		this.Mode = ModeEnum.OpenFile;
-		this.WindowTitle = "Import Config";
+		this.Mode = ModeEnum.SaveFile;
+		this.WindowTitle = "Export Config";
 		this.Popup_();
 	}
 
 	private void _on_ImportButton_pressed()
 	{
-		this.Mode = ModeEnum.SaveFile;
-		this.WindowTitle = "Export Config";
+		this.Mode = ModeEnum.OpenFile;
+		this.WindowTitle = "Import Config";
 		this.Popup_();
 	}
 }

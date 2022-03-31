@@ -55,10 +55,6 @@ public class MainInputs : VBoxContainer
 			(val, config) => config.AllowCaseSensitive = val,
 			config => config.AllowCaseSensitive
 		);
-
-		// Connect to FileDialog custom signals
-		this.Connect("SetExport", this, nameof(SetExport));
-		this.Connect("SetImport", this, nameof(SetImport));
 	}
 
 	private void AddItem<T>(IFactory<T> factory, string label,
@@ -85,12 +81,12 @@ public class MainInputs : VBoxContainer
 		}
 	}
 
-	private void SetExport()
+	private void _on_ExportButton_pressed()
 	{
 		this.ExportMode = true;
 	}
 
-	private void SetImport()
+	private void _on_ImportButton_pressed()
 	{
 		this.ExportMode = false;
 	}
@@ -128,3 +124,4 @@ public class MainInputs : VBoxContainer
 		public bool AllowCaseSensitive { get; set; }
 	}
 }
+

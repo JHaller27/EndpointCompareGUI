@@ -92,6 +92,8 @@ current_dir = "/Users/james.ERDOS/Documents/godot/EndpointCompareGUI"
 current_path = "/Users/james.ERDOS/Documents/godot/EndpointCompareGUI/"
 script = ExtResource( 2 )
 
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ImportButton" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_ImportButton_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ImportButton" to="FileDialog" method="_on_ImportButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ExportButton" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_ExportButton_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/TopMenuItems/ExportButton" to="FileDialog" method="_on_ExportButton_pressed"]
 [connection signal="file_selected" from="FileDialog" to="PanelContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/MarginContainer/MainInputs" method="_on_FileDialog_file_selected"]
